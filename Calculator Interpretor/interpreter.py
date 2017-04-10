@@ -3,7 +3,7 @@
 * EOF (End-Of-File) token is used to indicate that there is no more input left for 
 * lexical analysis
 """
-# from string import whitespace
+from string import whitespace
 
 
 INTEGER, PLUS, EOF = 'INTEGER', 'PLUS', 'EOF'
@@ -62,7 +62,7 @@ class Interpreter:
         current_char = text[self.pos]
 
         # See if the current character is a whitespace
-        if current_char == ' ':
+        if current_char in whitespace:
             self.pos += 1
             return self.get_next_token()
 
@@ -123,8 +123,12 @@ def main():
     while True:
         try:
             text = input("calc> ")
-        except EOFError as identifier:
+        except EOFError:
+            print("Exiting...")
             break
+        except KeyboardInterrupt:
+            print("")
+            continue
         if not text:
             continue
         
