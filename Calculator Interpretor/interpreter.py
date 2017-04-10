@@ -3,6 +3,7 @@
 * EOF (End-Of-File) token is used to indicate that there is no more input left for 
 * lexical analysis
 """
+# from string import whitespace
 
 
 INTEGER, PLUS, EOF = 'INTEGER', 'PLUS', 'EOF'
@@ -55,11 +56,16 @@ class Interpreter:
         # input left to convert into tokens
         if self.pos > len(text) - 1:
             return Token(EOF, None)
-        
+
         # get a character at the position self.pos and decide
         # what token to create based on the single character
         current_char = text[self.pos]
-        
+
+        # See if the current character is a whitespace
+        if current_char == ' ':
+            self.pos += 1
+            return self.get_next_token()
+
         # if the character is a digit then convert it to
         # integer, create an INTEGER token, increment self.pos
         # index to point to the next character after the digit,
@@ -68,14 +74,14 @@ class Interpreter:
             token = Token(INTEGER, int(current_char))
             self.pos += 1
             return token
-        
+
         if current_char == '+':
             token = Token(PLUS, current_char)
             self.pos += 1
             return token
-        
+
         self.error()
-    
+
     def eat(self, token_type):
         # compare the current token type with the passed token
         # type and if they match then "eat" the current token
@@ -85,7 +91,7 @@ class Interpreter:
             self.current_token = self.get_next_token()
         else:
             self.error(ValueError, "Mismatched tokens")
-    
+
     def expr(self):
         # expr -> INTEGER PLUS INTEGER
         # set current token to the first token taken from the input
