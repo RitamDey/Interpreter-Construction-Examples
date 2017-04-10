@@ -75,28 +75,27 @@ class Interpreter:
             token = Token(INTEGER, int(current_char))
             self.pos += 1
             return token
-
-        if current_char == '+':
-            token = Token(OPERATOR, current_char)
-            self.op = operator.add
-            self.pos += 1
-            return token
-        
-        elif current_char == '-': 
-            token = Token(OPERATOR, current_char)
-            self.op = operator.sub
-            self.pos += 1
-            return token
-        elif current_char == '*':
-            token = Token(OPERATOR, current_char)
-            self.op = operator.mul
-            self.pos += 1
-            return token
         else:
             token = Token(OPERATOR, current_char)
-            self.op = operator.truediv
             self.pos += 1
+
+            if current_char == '+':
+                self.op = operator.add
+            
+            elif current_char == '-': 
+                self.op = operator.sub
+
+            elif current_char == '*':
+                self.op = operator.mul
+
+            elif current_char == '**':
+                self.op = operator.pow
+
+            else:
+                self.op = operator.truediv
+
             return token
+            
 
         self.error()
 
