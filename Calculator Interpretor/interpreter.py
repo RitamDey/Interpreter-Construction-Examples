@@ -72,8 +72,15 @@ class Interpreter:
         # index to point to the next character after the digit,
         # and return the INTEGER token
         if current_char.isdigit():
-            token = Token(INTEGER, int(current_char))
-            self.pos += 1
+            num = 0
+            while current_char.isdigit():
+                num = num*10 + int(current_char)
+                self.pos += 1
+                try:
+                    current_char = text[self.pos]
+                except IndexError:
+                    break
+            token = Token(INTEGER, num)
             return token
         else:
             token = Token(OPERATOR, current_char)
@@ -104,8 +111,11 @@ class Interpreter:
         # type and if they match then "eat" the current token
         # and assign the next token to the self.current_token,
         # otherwise raise an exception.
+        
         if self.current_token.type == token_type:
             self.current_token = self.get_next_token()
+            # print(self.current_token.type)
+            # return self.current_token.type == token_type
         else:
             self.error(ValueError, "Mismatched tokens")
 
@@ -119,13 +129,16 @@ class Interpreter:
         left = self.current_token
         self.eat(INTEGER)
 
+
         # And now a PLUS 
         op = self.current_token
         self.eat(OPERATOR)
 
+
         # and finally the second one
         right = self.current_token
         self.eat(INTEGER)
+
         # after the above call the self.current_token is set to EOF token
 
         # at this point INTEGER PLUS INTEGER sequence of tokens
