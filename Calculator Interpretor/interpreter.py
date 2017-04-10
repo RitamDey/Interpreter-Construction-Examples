@@ -4,9 +4,10 @@
 * lexical analysis
 """
 from string import whitespace
+import operator
 
 
-INTEGER, PLUS, EOF = 'INTEGER', 'PLUS', 'EOF'
+INTEGER, OPERATOR, EOF = 'INTEGER', 'OPERATOR', 'EOF'
 
 
 class Token:
@@ -76,7 +77,24 @@ class Interpreter:
             return token
 
         if current_char == '+':
-            token = Token(PLUS, current_char)
+            token = Token(OPERATOR, current_char)
+            self.op = operator.add
+            self.pos += 1
+            return token
+        
+        elif current_char == '-': 
+            token = Token(OPERATOR, current_char)
+            self.op = operator.sub
+            self.pos += 1
+            return token
+        elif current_char == '*':
+            token = Token(OPERATOR, current_char)
+            self.op = operator.mul
+            self.pos += 1
+            return token
+        else:
+            token = Token(OPERATOR, current_char)
+            self.op = operator.truediv
             self.pos += 1
             return token
 
@@ -104,7 +122,7 @@ class Interpreter:
 
         # And now a PLUS 
         op = self.current_token
-        self.eat(PLUS)
+        self.eat(OPERATOR)
 
         # and finally the second one
         right = self.current_token
@@ -115,7 +133,7 @@ class Interpreter:
         # has been successfully found and the method can just
         # return the result of adding two integers, thus
         # effectively interpreting client input
-        result = left.value + right.value
+        result = self.op(left.value, right.value)
         return result
 
 
