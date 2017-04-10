@@ -88,7 +88,7 @@ class Interpreter:
             elif current_char == '*':
                 self.op = operator.mul
 
-            elif current_char == '**':
+            elif current_char == '^':
                 self.op = operator.pow
 
             else:
