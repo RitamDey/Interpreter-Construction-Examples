@@ -59,3 +59,8 @@ char *interpreter_nextToken(interpreter_t *inter) {
         return token;
     }
 }
+
+
+token_t *interpreter_eat(interperter_t *inter, token_t *token) {
+    if(strcmp(token->text, ))
+}
