@@ -1,7 +1,5 @@
-"""
-* Token types
-* EOF (End-Of-File) token is used to indicate that there is no more input left for 
-* lexical analysis
+""" 
+Token types EOF (End-Of-File) token is used to indicate that there is no more input left for lexical analysis 
 """
 from string import whitespace
 import operator
@@ -20,13 +18,13 @@ class Token:
     def __str__(self):
         """
         String representation of the class
-        
+
         Examples:
             Token(INTEGER, 3)
             Token(PLUS, '+')
         """
         return f"Token({self.type}, {self.value.__repr__()})"
-    
+
     def __repr__(self):
         return self.__str__()
 
@@ -39,10 +37,10 @@ class Interpreter:
         self.pos = 0
         # current token instane
         self.current_token = None
-    
+
     def error(self, error_type=Exception, msg='Error parsing input'):
         raise error_type(msg)
-    
+
     def get_next_token(self):
         """
         * Lexical analyzer (also known as scanner or tokenizer)
@@ -88,8 +86,8 @@ class Interpreter:
 
             if current_char == '+':
                 self.op = operator.add
-            
-            elif current_char == '-': 
+
+            elif current_char == '-':
                 self.op = operator.sub
 
             elif current_char == '*':
@@ -102,7 +100,6 @@ class Interpreter:
                 self.op = operator.truediv
 
             return token
-            
 
         self.error()
 
@@ -111,7 +108,7 @@ class Interpreter:
         # type and if they match then "eat" the current token
         # and assign the next token to the self.current_token,
         # otherwise raise an exception.
-        
+
         if self.current_token.type == token_type:
             self.current_token = self.get_next_token()
             # print(self.current_token.type)
@@ -129,11 +126,9 @@ class Interpreter:
         left = self.current_token
         self.eat(INTEGER)
 
-
-        # And now a PLUS 
+        # And now a PLUS
         op = self.current_token
         self.eat(OPERATOR)
-
 
         # and finally the second one
         right = self.current_token
@@ -161,7 +156,7 @@ def main():
             continue
         if not text:
             continue
-        
+
         interpreter = Interpreter(text)
         result = interpreter.expr()
 
