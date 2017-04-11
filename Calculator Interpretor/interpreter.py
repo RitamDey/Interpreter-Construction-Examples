@@ -1,5 +1,5 @@
-""" 
-Token types EOF (End-Of-File) token is used to indicate that there is no more input left for lexical analysis 
+"""
+Token types EOF (End-Of-File) token is used to indicate that there is no more input left for lexical analysis
 """
 from string import whitespace
 import operator
