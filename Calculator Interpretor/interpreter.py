@@ -1,6 +1,3 @@
-"""
-Token types EOF (End-Of-File) token is used to indicate that there is no more input left for lexical analysis
-"""
 from string import whitespace
 import operator
 
@@ -42,12 +39,9 @@ class Interpreter:
         raise error_type(msg)
 
     def get_next_token(self):
-        """
-        * Lexical analyzer (also known as scanner or tokenizer)
-        * This method is responsible for breaking a sentence
-        * apart into tokens. One token at a time.
-        """
-
+        # Lexical analyzer (also known as scanner or tokenizer)
+        # This method is responsible for breaking a sentence
+        # apart into tokens. One token at a time.
         text = self.text
 
         # is self.pos index past the end of the self.text ?
@@ -111,8 +105,6 @@ class Interpreter:
 
         if self.current_token.type == token_type:
             self.current_token = self.get_next_token()
-            # print(self.current_token.type)
-            # return self.current_token.type == token_type
         else:
             self.error(ValueError, "Mismatched tokens")
 
