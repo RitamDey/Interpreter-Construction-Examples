@@ -13,13 +13,6 @@ class Token:
         self.value = value
 
     def __str__(self):
-        """
-        String representation of the class
-
-        Examples:
-            Token(INTEGER, 3)
-            Token(PLUS, '+')
-        """
         return f"Token({self.type}, {self.value.__repr__()})"
 
     def __repr__(self):
