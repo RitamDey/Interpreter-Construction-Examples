@@ -136,7 +136,7 @@ class Interpreter:
         return result
 
 
-def main():
+if __name__ == '__main__':
     while True:
         try:
             text = input("calc> ")
@@ -153,7 +153,3 @@ def main():
         result = interpreter.expr()
 
         print(result)
-
-
-if __name__ == '__main__':
-    main()
