@@ -19,11 +19,25 @@
     void add_history(char* unused) {}
 
 #elif __linux__  // Defined if the OS is Linux-based POSIX-compliant
-    // #include <editline/readline.h>
-    #include <readline/readline.h>
-    // #include <histedit.h>
-    #include <readline/history.h>
+    #include <editline/readline.h>
+    // #include <readline/readline.h>
+    #include <histedit.h>
+    // #include <readline/history.h>
 #endif
+
+
+int number_of_nodes(mpc_ast_t* t) {
+    if(t->children_num == 0)
+        return 1;
+    if(t->children_num >= 1) {
+        int total = 1;
+
+        for(int i=0; i<t->children_num; ++i)
+            total += number_of_nodes(t->children[i]);
+        return total;
+    }
+    return 0;
+}
 
 
 int main() {
@@ -64,13 +78,23 @@ int main() {
             /* On sucess print the AST */
             mpc_ast_print(r.output);
             mpc_ast_delete(r.output);
+
+            mpc_ast_t* a = r.output;
+            printf("Tag: %s\n", a->tag);
+            printf("Contents: %s\n", a->contents);
+            printf("Number of children: %d\n", a->children_num);
+
+            /* Get the first child */
+            mpc_ast_t *c0 = a->children[0];
+            printf("First Child Tag: %s\n", c0->tag);
+            printf("First Child Contents: %s\n", c0->contents);
+            printf("First Child Number of children: %d\n", c0->children_num);
         }
         else {
             /* Otherwise print the error */
             mpc_err_print(r.error);
             mpc_err_delete(r.error);
         }
-        // printf("%s\n", input);
         free(input);
     }
     
